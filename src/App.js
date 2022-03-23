@@ -1,20 +1,17 @@
 import logo from './logo.svg';
 import './App.css';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 
 function App() {
   const [listaPokemon,setListaPokemon] = useState([]);
   const [called, setCalled] = useState(false);
   useEffect(() =>{
     if(called){
-      fetch("https://pokeapi.co/api/v2/pokemon?limit=807")
+      axios.get("https://pokeapi.co/api/v2/pokemon?limit=807")
       .then(respuesta =>{
-        if(respuesta.ok){
-          return respuesta.json();
-        }
-      })
-      .then((data)=>{
-        setListaPokemon([...data.results]);
+        setListaPokemon([...respuesta.data.results]);
       })
       .catch((err) =>{
         console.log(err);
